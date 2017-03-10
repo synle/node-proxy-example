@@ -1,6 +1,7 @@
 var https = require('https');
 var httpProxy = require('http-proxy');
 var fs = require('fs');
+var express = require('express');
 
 
 var port = '9001';
@@ -22,25 +23,22 @@ var serverOptions = {
 };
 
 
-// server itself
-var server = https.createServer(serverOptions, function(req, res) {
-        var requestUrl = req.url;
+
+app = express()
+
+app.get('/', function(req, res) {
+    res.writeHead(200, {"Content-Type": "text/plain"});
+    res.end("Responded from the Web Itself : Hello World\n");
+});
 
 
-        if(requestUrl.indexOf('/api') >= 0){
-            // redirect
-            // You can define here your custom logic to handle the request
-            // and then proxy the request.
-            proxy.web(req, res, options);
-        } else {
-            res.writeHead(200, {"Content-Type": "text/plain"});
-            res.end("Responded from the Web Itself : Hello World\n");
-        }
-    })
-    .listen(port);
+app.get('/api', function(req, res) {
+    proxy.web(req, res, proxyOptions);
+});
 
 
-console.log('proxy', proxyUrl);
-console.log('listen to port', port);
-
+var server = https.createServer(serverOptions, app)
+    .listen(port, function(){
+        console.log('listen to port', port);
+    });
 
