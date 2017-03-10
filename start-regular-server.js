@@ -1,11 +1,8 @@
-var https = require('https');
+var http = require('http');
 var httpProxy = require('http-proxy');
-var fs = require('fs');
-
 
 var port = '9001';
 var proxyUrl = 'http://127.0.0.1:8000';
-// var proxyUrl = 'https://yourInstance.salesforce.com/services/data/';
 
 var proxyOptions = {
     target: proxyUrl
@@ -16,14 +13,10 @@ proxy.on('error', function(e) {
     console.log('PROXY ERROR: ', e);
 });
 
-var serverOptions = {
-    key: fs.readFileSync('./cert/key.pem'),
-    cert: fs.readFileSync('./cert/cert.pem')
-};
 
 
 // server itself
-var server = https.createServer(serverOptions, function(req, res) {
+var server = http.createServer(function(req, res) {
         var requestUrl = req.url;
 
 

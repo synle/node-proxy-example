@@ -1,5 +1,4 @@
 var port = '9001';
-// var proxyUrl = 'https://yourInstance.salesforce.com/services/data/';
 var proxyUrl = 'http://127.0.0.1:8000';
 
 var httpProxy = require('http-proxy');
