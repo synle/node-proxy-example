@@ -6,7 +6,6 @@ var express = require('express');
 
 var port = '9001';
 var proxyUrl = 'http://127.0.0.1:8000';
-// var proxyUrl = 'https://yourInstance.salesforce.com/services/data/';
 
 var proxyOptions = {
     target: proxyUrl
