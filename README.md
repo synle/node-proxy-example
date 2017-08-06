@@ -1,9 +1,6 @@
 # node-proxy
-=========
-
 
 ## To use change the host accordingly
-==========================================
 ```
 // Port for proxy
 var port = '9001';
@@ -14,7 +11,6 @@ var proxyUrl = 'https://yourInstance.salesforce.com/services/data/';
 
 
 ## To start the proxy
-==========================================
 ```
 npm start
 ```
@@ -22,7 +18,6 @@ npm start
 
 
 ## Generate self-signed certs for SSL (https)
-==========================================
 Source:
 https://docs.nodejitsu.com/articles/HTTP/servers/how-to-create-a-HTTPS-server/
 https://devcenter.heroku.com/articles/ssl-certificate-self
