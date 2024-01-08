@@ -1,37 +1,34 @@
-var port = "9001";
-var proxyUrl = "http://127.0.0.1:8000";
-var keyPath = "./cert/key.pem";
-var certPath = "./cert/cert.pem";
+const port = "9001"; // 443 (https)
+const proxyUrl = "http://127.0.0.1:8000";
+const keyPath = "./cert/key.pem"; // "./server.key"
+const certPath = "./cert/cert.pem"; // "./server.crt"
 
-var https = require("https");
-var httpProxy = require("http-proxy");
-var fs = require("fs");
+const https = require("https");
+const httpProxy = require("http-proxy");
+const fs = require("fs");
 
-var proxy = httpProxy.createProxyServer({
+const proxy = httpProxy.createProxyServer({
   target: proxyUrl,
 });
 
-proxy.on("error", function (e) {
-  console.log("PROXY ERROR: ", e);
-});
+proxy.on("error", (e) => console.log("PROXY ERROR: ", e));
 
-// server itself
-var server = https
+const server = https
   .createServer(
     {
       key: fs.readFileSync(keyPath),
       cert: fs.readFileSync(certPath),
     },
-    function (req, res) {
-      var requestUrl = req.url;
+    (req, res) => {
+      const requestUrl = req.url;
 
       if (requestUrl.indexOf("/api") >= 0) {
-        proxy.web(req, res, proxyOptions);
+        proxy.web(req, res);
       } else {
         res.writeHead(200, { "Content-Type": "text/plain" });
         res.end("Responded from the Web Itself : Hello World\n");
       }
-    },
+    }
   )
   .listen(port);
 
